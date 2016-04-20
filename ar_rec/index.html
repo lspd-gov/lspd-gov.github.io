@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<!-- Сделал Bundstrom. Можете пиздить сколько угодно, мне похер. -->
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="animate.css">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,500,300,900&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<title>Генератор Arrest Reports | PD-GOV.RU</title>
+	
+</head>
+<!-- Ну и в дизайн учитесь, а то будете как некоторые. -->
+<body>
+	<div class="wrapper">
+		<header>
+			<img src="../logo.png" height="200" width="850" alt="Los Santos Police Department" draggable="false">
+			<ul id="headerMenu">
+				<li id="linkMain"><a href="http://pd-gov.ru/">Main</a></li>
+				<li id="linkForum"><a href="http://pd-gov.ru/forum">Forum</a></li>
+				<li id="linkGenerators"><a href="../index.html">Generators</a></li>
+			</ul>
+		</header>
+		<div id="formContainer">
+			<form onsubmit="return false;" id="arrestRecordForm">
+				<fieldset id="arMainFieldset">
+					<legend id="armFieldsetLegend">
+						<div id="legendImageWrapper"><img id="legendImage" src="doc.png" height="125" width="125"></div>
+						<div id="legendTitle">Arrest Records Generator</div>
+					</legend>
+					<hr>
+					<div id="dateInputWrap" class="inputWrap">
+						<label for="todayDate">Сегодняшняя дата:</label>
+						<input data-polyfill="all" data-format="dd/MMM/yyyy" class="recordInput" readonly="readonly" name="todayDate" id="todayDate" type="date" required="required">
+						<span>Заполняется автоматически, время GMT +3.</span>
+					</div>
+					<div id="nameInputWrap" class="inputWrap">
+						<label for="suspectName">Имя арестованного:</label>
+						<input class="recordInput" id="suspectName" name="suspectName" type="text" required="required">
+						<span>Полное имя (first name) арестованного, включая middle name (если есть).</span>
+					</div>
+
+					<div id="surnameInputWrap" class="inputWrap">
+						<label for="suspectSurname">Фамилия арестованного:</label>
+						<input class="recordInput" id="suspectSurname" name="suspectSurname" type="text" required="required">
+						<span>Фамилия арестованного гражданина (если есть).</span>
+					</div>
+
+					<div id="nicknamesInputWrap" class="inputWrap">
+						<label for="suspectNicknames">Известные клички арестованного:</label>
+						<input class="recordInput" id="suspectNicknames" name="suspectNicknames" type="text" placeholder="NONE">
+						<span>Если клички неизвестны, поле не трогать (оставить пустым\"NONE").</span>
+					</div>
+
+					<div id="jailTimeInputWrap" class="inputWrap">
+						<label for="suspectJailTime">Срок заключения:</label>
+						<input class="recordInput" id="suspectJailTime" name="suspectJailTime" min="1" type="number" required="required">
+						<span>Ориентировочное время, которое преступник должен провести за решёткой.</span>
+					</div>
+					
+					<div id="jailDateInputWrap" class="inputWrap">
+						<label for="suspectJailDate">Дата ареста:</label>
+						<input data-polyfill="all" autocomplete="off" data-format="dd/MMM/yyyy" class="recordInput" name="suspectJailDate" id="suspectJailDate" type="date" required="required">
+						<span>Заполняется вручную, время GMT +3.</span>
+					</div>
+
+					<div id="unjailDateInputWrap" class="inputWrap">
+						<label for="suspectUnjailDate">Дата освобождения:</label>
+						<input class="recordInput" readonly="readonly" name="suspectUnjailDate" id="suspectUnjailDate" type="text" required="required">
+						<span>Ориентировочная дата освобождения (поле заполняется автоматически, с учетом високосных годов).</span>
+					</div>
+
+					<div id="suspectIDInputWrap" class="inputWrap">
+						<label for="suspectID">Кодовый номер арестованного:</label>
+						<input class="recordInput" name="suspectID" id="suspectID" type="number" min="1" max="99999" step="1" required="required">
+						<span>Узнать номер можно, посмотрев текущий максимальный номер в разделе с Arrest Records.</span>
+					</div>
+
+					<div id="statusInputWrap" class="inputWrap">
+						<label for="suspectStatus">Статус арестованного:</label>
+						<select name="suspectStatus" id="suspectStatus" required="required">
+							<option value="alive">ALIVE</option>
+							<option value="dead">DEAD</option>
+						</select>
+						<span>ALIVE — жив, DEAD — мёртв.<br>— Капитан, ваш корабль готов к отплытию!</span>
+					</div>
+
+					<div id="officerInputWrap" class="inputWrap">
+						<label for="officerData">Данные офицера:</label>
+						<input class="recordInput" id="officerData" name="officerData" type="text" placeholder="Например: PO I Kyle Sherman">
+						<span>В формате «ранг, имя, фамилия». Писать полное название ранга. Указывается только офицер, составляющий отчёт.</span>
+					</div>
+
+					<div id="crimesInputWrap" class="inputWrap--big">
+						<label for="crimesInput">Полное описание преступлений, совершенных задержанным:</label>
+						<textarea class="recordInput" id="crimesInput" name="crimesInput" rows="5"></textarea>
+						<span>Номера статей, их названия и — опционально — пояснения.</span>
+					</div>
+					
+					<div id="casefileInputWrap" class="inputWrap--big">
+						<label for="casefileInput">Ссылка на Casefile заключенного:</label>
+						<input class="recordInput" id="casefileInput" name="casefileInput" type="url" placeholder="NONE">
+						<span>Если кейсфайла нет — поле не трогать.</span>
+					</div>
+					
+					<div class="buttonWrap" id="clearWrap">
+						<input id="clearForm" name="clearForm" type="button" value="Очистить форму">
+					</div>
+
+					<div class="buttonWrap" id="submitWrap">
+						<input onclick="formSubmitCatch();" id="submitRecord" name="submitRecord" type="submit" value="Сгенерировать Arrest Record">
+					</div>
+
+				</fieldset>
+			</form>
+		</div>
+		<div id="resultContainer">
+			<div>
+				<div class="resultTitle">
+					<h2>Заголовок Arrest Record</h2>
+					<a onClick="event.preventDefault();" id="themeNameSelect" href="#"><h3>Выделить всё</h3></a>
+				</div>
+				<div id="themeName" class="resultBox">
+					<span id="themeNameBox"></span>
+				</div>
+			</div>
+			<div>
+				<div class="resultTitle" id="codeTitle">
+					<h2>Код Arrest Record</h2>
+					<a onClick="event.preventDefault();" id="themeCodeSelect" href="#"><h3>Выделить всё</h3></a>
+				</div>
+				<div id="themeCode" class="resultBox">
+					<span id="themeCodeBox"></span>
+				</div>
+			</div>
+		</div>
+		<div id="credits">Bundstrom made this.</div>
+		<script>window.noZensmooth = true</script>
+		<script src="../moment.js"></script>
+		<script src="../momenttz.js"></script>	
+		<script src="../sprintf.min.js"></script>
+		<script src="../zenscroll-min.js"></script>
+		<script src="../better-dom.min.js"></script>
+		<script src="../better-i18n-plugin.min.js"></script>
+		<script src="../better-emmet-plugin.min.js"></script>
+		<script src="../better-time-element.min.js"></script>
+		<script src="../better-dateinput-polyfill.min.js"></script>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function(event) {
+				window.noZensmooth = false;
+				var jailTime = document.getElementById('suspectJailTime'); // получаем дату и срок заключения
+				var jailDate = document.getElementById('suspectJailDate');
+				var	clearButton = document.getElementById('clearForm');
+				var arrestRecordForm = document.getElementById('arrestRecordForm');
+				var themeNameSelect = document.getElementById('themeNameSelect');
+				var themeCodeSelect = document.getElementById('themeCodeSelect');
+				var forEach = Array.prototype.forEach,
+					$$ = document.querySelectorAll.bind(document);
+
+				forEach.call($$('.recordInput'), function (v) {
+					v.addEventListener('change', function (e) {
+						localStorage.setItem(v.id, v.value);
+						if (v.id == "officerData") {
+							localStorage.setItem("officerName", v.value);
+						}
+						if (v.id == "suspectJailTime" && document.getElementById('suspectUnjailDate').value !== undefined) {
+							if (document.querySelector('#jailDateInputWrap > .btr-dateinput-value').getAttribute('datetime') == "" || jailTime.value == "") {
+								return;
+							}
+							countUnjailDate();
+							localStorage.setItem('suspectUnjailDate', document.getElementById('suspectUnjailDate').value);
+						}
+					}, false)
+				});
+
+				forEach.call($$('.btr-dateinput-value'), function (v) {
+					v.addEventListener('change', function (e) {
+						// if (v.id == "suspectJailDate") {
+						// 	localStorage.setItem('suspectJailDate', document.querySelector('#jailDateInputWrap > .btr-dateinput-value').getAttribute('datetime'));
+						// }
+						if (v.nextSibling.id == "suspectJailDate" && document.getElementById('suspectUnjailDate').value !== undefined) {
+							if (document.querySelector('#jailDateInputWrap > .btr-dateinput-value').getAttribute('datetime') == "" || jailTime.value == "") {
+								return;
+							}
+
+							countUnjailDate();
+							localStorage.setItem('suspectJailDate', v.getAttribute("datetime"));
+							localStorage.setItem('suspectUnjailDate', document.getElementById('suspectUnjailDate').value);
+						}
+					}, false)
+
+					/* А сейчас небольшое объявление:
+
+						ЕБАТЬ ПИЗДЕЦ.
+
+
+
+					  Спасибо за внимание.	
+					 */
+				});
+			  	moment.tz.setDefault('Europe/Moscow'); // дефолтная таймзона
+				document.getElementById('todayDate').value = moment().format('YYYY-MM-DD'); //вставляем дату составления отчета по Москве.
+				if (localStorage.getItem('officerName')) document.getElementById('officerData').value = localStorage.getItem('officerName');
+				if (localStorage.getItem('suspectName')) document.getElementById('suspectName').value = localStorage.getItem('suspectName');
+				if (localStorage.getItem('suspectSurname')) document.getElementById('suspectSurname').value = localStorage.getItem('suspectSurname');
+				if (localStorage.getItem('suspectNicknames')) document.getElementById('suspectNicknames').value = localStorage.getItem('suspectNicknames');
+				if (localStorage.getItem('suspectID')) document.getElementById('suspectID').value = localStorage.getItem('suspectID');
+				if (localStorage.getItem('suspectJailTime')) document.getElementById('suspectJailTime').value = localStorage.getItem('suspectJailTime');
+				if (localStorage.getItem('suspectJailDate')) document.getElementById('suspectJailDate').value = localStorage.getItem('suspectJailDate');
+				if (localStorage.getItem('suspectUnjailDate')) document.getElementById('suspectUnjailDate').value = localStorage.getItem('suspectUnjailDate');
+				if (localStorage.getItem('crimesInput')) document.getElementById('crimesInput').value = localStorage.getItem('crimesInput');
+				if (localStorage.getItem('casefileInput')) document.getElementById('casefileInput').value = localStorage.getItem('casefileInput'); // проверяем, есть ли в localStorage незаконченные записи, если есть — достаём и вставляем в поля
+				// var allInputWraps = document.getElementsByClassName('inputWrap');
+				// var allBigInputWraps = document.getElementsByClassName('inputWrap--big');
+
+				suspectID.addEventListener("change", function () {
+					if (suspectID.value.length === 1){
+						suspectID.value = "00" + suspectID.value;
+					} else if (suspectID.value.length === 2) {
+						suspectID.value = "0" + suspectID.value;
+					}
+				});
+
+				themeCodeSelect.addEventListener("click", function() {
+					var selector = document.getElementById("themeCode");
+					var selection = window.getSelection();
+					selection.selectAllChildren(selector);
+				});
+
+				themeNameSelect.addEventListener("click", function() {
+					var selector = document.getElementById("themeName");
+					var selection = window.getSelection();
+					selection.selectAllChildren(selector);
+				});
+
+				clearButton.addEventListener("click", function() {
+					document.getElementById('arrestRecordForm').reset();
+					clearLocalStorage();
+					document.getElementById('todayDate').value = moment().format('YYYY-MM-DD');
+					if (localStorage.getItem('officerName')) document.getElementById('officerData').value = localStorage.getItem('officerName');
+				});
+
+				function countUnjailDate() {
+					var unixJailDate = Date.parse(document.querySelector('#jailDateInputWrap > .btr-dateinput-value').getAttribute('datetime')); // дату из поля в миллисекунды от Unix time.
+					var resultDate = new Date(unixJailDate + jailTime.value*365*24*60*60*1000); // охренеть какие большие числа
+					moment.tz.setDefault('Europe/London'); // мне снова лень смотреть, поэтому просто поставлю Лондон.
+					document.getElementById('suspectUnjailDate').value = moment(resultDate).format("D/MMM/YYYY").toUpperCase(); // вернуть всё назад
+				}
+
+
+				function adjust_textarea(h) { // не моё.
+				    h.style.height = "20px";
+				    h.style.height = (h.scrollHeight)+"px";
+				};
+			});
+					
+			function formSubmitCatch() {
+				if(document.getElementById('suspectID').checkValidity() && document.getElementById('officerData').checkValidity() && document.getElementById('todayDate').checkValidity() && document.getElementById('suspectName').checkValidity() && document.getElementById('suspectSurname').checkValidity() && document.getElementById('suspectNicknames').checkValidity() && document.getElementById('suspectUnjailDate').checkValidity() && document.getElementById('suspectStatus').checkValidity() && document.getElementById('crimesInput').checkValidity() && document.getElementById('casefileInput').checkValidity() && document.getElementById('suspectJailTime').checkValidity() && document.getElementById('suspectJailDate').checkValidity()) { // Да ёб. Не смотрите сюда.
+					var about = document.getElementById("resultContainer");
+					var record = new Array(); 
+					 	record['suspectID'] = document.getElementById('suspectID').value,
+						record['officerName'] = document.getElementById('officerData').value,
+						record['todayDate'] = moment(document.getElementById('todayDate').value).format("D/MMM/YYYY").toUpperCase(),
+						record['suspectName'] = document.getElementById('suspectName').value,
+						record['suspectSurname'] = document.getElementById('suspectSurname').value,
+						record['suspectNicknames'] = document.getElementById('suspectNicknames').value,
+						record['suspectUnjailDate'] = document.getElementById('suspectUnjailDate').value,
+						record['suspectStatus'] = document.getElementById('suspectStatus').value,
+						record['crimesInput'] = document.getElementById('crimesInput').value,
+						record['casefileInput'] = document.getElementById('casefileInput').value;
+						record['jailTime'] = document.getElementById('suspectJailTime').value;
+						record['jailDate'] = moment(document.getElementById('suspectJailDate').value).format("D/MMM/YYYY").toUpperCase();
+
+					localStorage.setItem("officerName", record['officerName']);
+
+					function addClass(o, c){
+					    var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g")
+					    if (re.test(o.className)) return
+					    o.className = (o.className + " " + c).replace(/\s+/g, " ").replace(/(^ | $)/g, "")
+					}
+
+					if (record['casefileInput'] == "") { record['casefileInput'] = "[color=#BF0000]NONE[/color]"; } else { record['casefileInput'] = "[color=#4080BF]" + record['casefileInput'] + "[/color]" };
+					if (record['suspectNicknames'] == "") { record['suspectNicknames'] = "[color=#BF0000]NONE[/color]"; } else {  record['suspectNicknames'] = "[color=#4080BF]" + record['suspectNicknames'].toUpperCase() + "[/color]"};
+					if (record['suspectID'].length === 1){
+						record['suspectID'] = "00" + record['suspectID'];
+					} else if (record['suspectID'].length === 2) {
+						record['suspectID'] = "0" + record['suspectID'];
+					}
+
+					var resultCode = sprintf(`[textarea][center][img]http://i1219.photobucket.com/albums/dd436/nickshitbrick/doclogo250pix.png[/img]
+[/center][/textarea]
+[textarea][b]СЕГОДНЯШНЯЯ ДАТА:[/b] [color=#4080BF]%s[/color]
+[b]ПОЛНОЕ ИМЯ ЗАКЛЮЧЕННОГО:[/b] [color=#4080BF]%s[/color]
+[b]ФАМИЛИЯ ЗАКЛЮЧЕННОГО:[/b] [color=#4080BF]%s[/color]
+[b]ИЗВЕСТНЫЕ ПРОЗВИЩА ЗАКЛЮЧЕННОГО:[/b] %s
+[b]СРОК ЗАКЛЮЧЕНИЯ:[/b]  [color=#4080BF]%d YEARS[/color]
+[b]ДАТА ЗАКЛЮЧЕНИЯ:[/b]  [color=#4080BF]%s[/color]
+[b]ДАТА ОСВОБОЖДЕНИЯ:[/b] [color=#4080BF]%s[/color]
+[b]КОДОВЫЙ НОМЕР ЗАКЛЮЧЁННОГО[/b] [color=#4080BF]%s[/color]
+[b]СОСТОЯНИЕ ЗАКЛЮЧЕННОГО:[/b] [color=#4080BF]%s[/color]
+[b]ЗВАНИЕ И ПОЛНОЕ ИМЯ И ФАМИЛИЯ ОФИЦЕРА:[/b] [color=#4080BF]%s[/color]
+[b]ПОЛНОЕ ОПИСАНИЕ ПРЕСТУПЛЕНИЙ ЗАКЛЮЧЕННОГО:[/b] [color=#4080BF]%s[/color]
+[b]ССЫЛКА НА CASEFILE ЭТОГО ЗАКЛЮЧЕННОГО:[/b] %s
+[/textarea]`, record['todayDate'], record['suspectName'].toUpperCase(), record['suspectSurname'].toUpperCase(), record['suspectNicknames'], record['jailTime'], record['jailDate'], record['suspectUnjailDate'], record['suspectID'], record['suspectStatus'].toUpperCase(), record['officerName'].toUpperCase(), record['crimesInput'], record['casefileInput']);
+					var recordThemeName = sprintf("[%s] [%s %s] [%s]", record['suspectID'], record['suspectName'].toUpperCase(), record['suspectSurname'].toUpperCase(), record['todayDate'])
+					var pattern = /\r\n|\r|\n/g;
+					var resultCode = resultCode.replace(pattern,"<br>");
+
+					document.getElementById("themeNameBox").innerHTML = recordThemeName;
+					document.getElementById("themeCodeBox").innerHTML = resultCode;
+					document.getElementById("resultContainer").style.display = "block";
+					addClass(document.getElementById("resultContainer"), "animated zoomIn");
+
+
+					function reformatDate(dateStr) {
+						dArr = dateStr.split("-");
+						return dArr[2]+ "." +dArr[1]+ "." +dArr[0].substring(2);
+					}
+
+					zenscroll.to(about)
+
+
+				} else {
+					return false;
+				}
+			};
+
+			function clearLocalStorage() {
+				if (localStorage.getItem('suspectName')) localStorage.removeItem('suspectName');
+				if (localStorage.getItem('suspectSurname')) localStorage.removeItem('suspectSurname');
+				if (localStorage.getItem('suspectNicknames')) localStorage.removeItem('suspectNicknames');
+				if (localStorage.getItem('suspectID')) localStorage.removeItem('suspectID');
+				if (localStorage.getItem('suspectJailTime')) localStorage.removeItem('suspectJailTime');
+				if (localStorage.getItem('suspectJailDate')) localStorage.removeItem('suspectJailDate');
+				if (localStorage.getItem('suspectUnjailDate')) localStorage.removeItem('suspectUnjailDate');
+				if (localStorage.getItem('suspectStatus')) localStorage.removeItem('suspectStatus');
+				if (localStorage.getItem('crimesInput')) localStorage.removeItem('crimesInput');
+				if (localStorage.getItem('casefileInput')) localStorage.removeItem('casefileInput');
+			}
+		</script>
+	</div>
+</body>
+</html>

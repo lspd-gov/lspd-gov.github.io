@@ -1,0 +1,318 @@
+/* reset.css start */
+
+/* 
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich_clark
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+
+/* reset.css finish */
+
+html {
+	height: auto;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	height: 100%;
+	margin: 0 auto;
+	/* background-color: #223344; */
+	background-image: linear-gradient(to bottom, #223344 0%, #223344 49px, #223344 50px, #232d37 150px, #232d37 400px, #000 100%);
+	height: 100%;
+}
+
+.wrapper {
+	width: 960px;
+	display: block;
+	margin: 0 auto;
+	background-color: rgba(255, 255, 255, 0.93);
+	height: auto;
+	padding-bottom: 10px;
+}
+
+#headerMenu {
+	display: block;
+	width: 60%;
+	height: 40px;
+	margin-top: -40px;
+	background-color: #232d37;
+	padding-left: 180px;
+	box-sizing: border-box;
+}
+
+#headerMenu > li {
+	display: inline-block;
+	height: 100%;
+	line-height: 40px;
+	padding: 0px 12px;
+	text-align: center;
+}
+
+#headerMenu > li > a {
+	color: white;
+	font-size: 18pt;
+	font-weight: 700;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: all .9s ease;
+}
+
+#headerMenu > li > a:hover {
+	color: #dadaff;
+	text-decoration: underline;
+	transition: all .9s ease;
+}
+
+#formContainer {
+	box-sizing: border-box;
+	margin: 15px;
+	margin-top: 20px;
+	padding: 15px;
+	padding-top: 20px;
+	width: auto;	
+	background: #ffffff;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	text-align: center;
+	position: relative;
+}
+
+.oocTip {
+	color: #999;
+	font-size: 8pt;
+	line-height: 10pt;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	padding: 40px 20px 20px 20px;
+	background-color: #fafafa;
+	border: 1px dashed #eee;
+	box-sizing: border-box;
+}
+
+#credits {
+	color: #999;
+	font-size: 8pt;
+	display: block;
+	text-align: center;
+}
+
+.adsd {
+}
+
+.icTip {
+	box-sizing: border-box;
+	background-color: #f0f0f0;
+	border: 1px solid #ddd;
+	font-size: 11pt;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	text-align: left;
+	line-height: 16pt;
+}
+
+.icTip p::after {
+	display: block;
+	content: ' ';
+	margin-bottom: 20px;
+}
+.leftParagraph {
+	float: left;
+	position: relative;
+	margin-top: 5px;
+}
+
+.textLine {
+	padding: 40px 20px 5px 20px;
+}
+
+.signLine {
+	background-color: #eaeaea;
+	border-top: 1px dashed #ddd;
+	padding: 5px 20px;
+}
+
+.signLine:after {
+	
+	display: block;
+	content: ' ';
+	clear: both;	
+	height: 1px;
+	visibility: hidden;
+
+}
+
+.sign {
+	margin-top: 25px;	
+	float: right;
+	text-align: right;
+	font-size: 10pt;
+	color: #777;
+}
+
+.icTip:after {
+	display: block;
+	content: ' ';
+	clear: both;	
+	height: 1px;
+	visibility: hidden;
+}
+
+.genMini {
+	width: 330px;
+	background-color: #f2f2f2;
+	border: 1px solid #dfdfdf;
+	height: 195px;
+	padding-top: 20px;
+	transition: all .6s ease;
+	border-radius: 4px;
+		
+}
+
+.genLinkBlock {
+	display: block;
+	
+	box-sizing: border-box;
+	margin: 20px;
+	text-decoration: none;
+}
+
+.genMini span {
+	color: #999;
+	font-size: 10pt;
+	text-transform: uppercase;
+	transition: all .3s ease;
+}
+
+.hoverTab {
+	transition: all .6s ease;
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
+
+.genMini > .hoverTabSpan {
+	color: #333;
+	transition: all .3s ease;
+}
+
+.genLinkBlock:nth-child(odd) {
+	float: left;
+	margin-left: 90px;	
+}
+
+.genLinkBlock:nth-child(even) {
+	float: right;
+	margin-right: 90px;	
+}
+
+.gensList {
+	margin-top: 20px;
+}
+
+.gensList:after {
+	display: block;
+	content: ' ';
+	clear: both;	
+	height: 1px;
+	visibility: hidden;
+}

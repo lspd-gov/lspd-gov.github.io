@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<!-- Сделал Bundstrom. Можете пиздить сколько угодно, мне похер. -->
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="main.css">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,500,300,900&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<title>Генераторы | PD-GOV.RU</title>
+	
+</head>
+<!-- Ну и в дизайн учитесь, а то будете как некоторые. -->
+<body>
+	<div class="wrapper">
+		<header>
+			<img src="logo.png" height="200" width="850" alt="Los Santos Police Department" draggable="false">
+			<ul id="headerMenu">
+				<li id="linkMain"><a href="http://pd-gov.ru/">Main</a></li>
+				<li id="linkForum"><a href="http://pd-gov.ru/forum">Forum</a></li>
+				<li id="linkGenerators"><a class="active">Generators</a></li>
+			</ul>
+		</header>
+		<div id="formContainer">
+			<div class="oocTip">
+				(( На этой странице вы сможете найти все существующие на данный момент генераторы для упрощенного создания отчётов LSPD. )) <br> (( Я буду иногда добавлять новые — когда у меня будет время и желание. )) <br>
+				(( Если вы заглянете в код моих генераторов, вы поймёте, что там нет ничего, кроме страха и отчаяния. )) <br>(( Можете забирать. ))<br> (( Если оно вам надо. ))
+			</div>
+			
+			<div class="icTip">
+				<div class="textLine">	
+					<p>Данное программное обеспечение разработано специалистами LSPD для облегчения процесса составления отчётности по работе офицеров. </p><p>Все программы, находящиеся в этом разделе, на данный момент находятся <strong>в стадии бета-тестирования</strong> и потому любой фидбэк с найденными ошибками или предложениями по улучшению программ будет обработан в кратчайшие сроки.</p>
+
+					<p>Использование программ не требует каких-либо специальных навыков, офицеру достаточно лишь ввести данные в нужную форму и программа подготовит весь отчёт. На случай сбоя <strong>все данные в каждой форме логируются и сохраняются</strong> до момента ручной очистки.</p>
+
+					<p>После каждого составленного отчёта рекомендуется <strong>очищать форму</strong> предназаченной для этого кнопкой.</p>
+				</div>
+				<div class="signLine">
+					<div class="leftParagraph"><img src="ads.png" class="adsd" height="125" width="125" alt="AD&SD"></div>
+					<div class="sign">
+					Chris Moore,<br>
+					Information Systems Manager II,<br>
+					Application Development & Support Division,<br>
+					Information Technology Bureau.<br>
+					20/APR/2016
+					</div>
+				</div>
+				
+			</div>
+			<div class="gensList">	
+				<a class="genLinkBlock" href="./ar_rec/index.html">
+					<div class="genMini" id="genOne genArrestRecord">
+						<img src="ar_rec-logo.jpg" width="300" height="166" alt="arrest record generator">
+						<span>Arrest Records</span>
+					</div>
+				</a>
+				<a class="genLinkBlock" onclick="preventDefault()">
+					<div class="genMini" id="genTwo">
+						<img src="soon-logo.jpg" width="300" height="166" alt="some generator">
+						<span>Officer File — Arrest Reports (soon)</span>
+					</div>
+				</a>
+				<a class="genLinkBlock" href="" onclick="preventDefault()">
+					<div class="genMini" id="genThree">
+						<img src="soon-logo.jpg" width="300" height="166" alt="some generator">
+						<span>Incident Reports (soon)</span>
+					</div>
+				</a>
+				<a class="genLinkBlock" onclick="preventDefault()">
+					<div class="genMini" id="genFour">
+						<img src="soon-logo.jpg" width="300" height="166" alt="some generator">
+						<span>Officer File — Weapon Using Report (soon)</span>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div id="credits">Bundstrom made this.</div>
+	</div>
+	<script>
+			document.addEventListener("DOMContentLoaded", function(event) {
+				var forEach = Array.prototype.forEach,
+					$$ = document.querySelectorAll.bind(document);
+
+				forEach.call($$('.genMini'), function (v) {
+					v.addEventListener('mouseover', function (e) {
+						addClass(v.getElementsByTagName("span")[0], "hoverTabSpan");
+						addClass(v, "hoverTab")
+					}, false);
+
+					v.addEventListener('mouseout', function (e) {
+						removeClass(v.getElementsByTagName("span")[0], "hoverTabSpan");
+						removeClass(v, "hoverTab")
+					}, false);
+
+				});
+
+				function addClass(o, c){
+				    var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g")
+				    if (re.test(o.className)) return
+				    o.className = (o.className + " " + c).replace(/\s+/g, " ").replace(/(^ | $)/g, "")
+				}
+				 
+				function removeClass(o, c){
+				    var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g")
+				    o.className = o.className.replace(re, "$1").replace(/\s+/g, " ").replace(/(^ | $)/g, "")
+				}
+
+			});
+	</script>
+</body>
+</html>
