@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<!-- Сделал Bundstrom. Можете пиздить сколько угодно, мне похер. -->
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="animate.css">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,500,300,900&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<title>Генератор Personal File Arrest Report | PD-GOV.RU</title>
+	
+</head>
+<!-- Ну и в дизайн учитесь, а то будете как некоторые. -->
+<body>
+	<div class="wrapper">
+		<header>
+			<img src="../logo.png" height="200" width="850" alt="Los Santos Police Department" draggable="false">
+			<ul id="headerMenu">
+				<li id="linkMain"><a href="http://pd-gov.ru/">Main</a></li>
+				<li id="linkForum"><a href="http://pd-gov.ru/forum">Forum</a></li>
+				<li id="linkGenerators"><a href="../index.html">Generators</a></li>
+			</ul>
+		</header>
+		<div id="formContainer">
+			<form onsubmit="return false;" id="arrestReportForm">
+				<fieldset id="arMainFieldset">
+					<legend id="armFieldsetLegend">
+						<div id="legendImageWrapper"><img id="legendImage" height="125" width="125"><span>Текущая смена</span></div>
+						<div id="legendTitle">Personal File Arrest Reports Generator</div>
+						<span id="legendSubtitle">Office of Operation, Central Area Patrol Division</span>
+					</legend>
+					<hr>
+					<div class="inputWrap--big">
+						<label class="outer">Выберите смену:</label>
+						<div id="watchSelectWrap" class="cc-selector">
+							<div>
+								<input class="watchRadio" id="watchMorning" type="radio" name="watch" value="1" />
+								<label class="watch-cc morning" for="watchMorning"></label>
+							</div>
+							<div>
+								<input class="watchRadio" id="watchDay" type="radio" name="watch" value="2" />
+								<label class="watch-cc day" for="watchDay"></label>
+							</div>
+							<div>
+								<input class="watchRadio" id="watchAfternoon" type="radio" name="watch" value="3" />
+								<label class="watch-cc afternoon" for="watchAfternoon"></label>
+							</div>
+							<div>
+								<input class="watchRadio" id="watchEvening" type="radio" name="watch" value="4" />
+								<label class="watch-cc evening" for="watchEvening"></label>
+							</div>
+							<div>
+								<input class="watchRadio" id="watchNight" type="radio" name="watch" value="5" />
+								<label class="watch-cc night" for="watchNight"></label>
+							</div>
+						</div>
+						<div class="watchDescr" id="watchDescr">
+							Каждая смена патруля длится от 3 до 6 часов.<br>Выберите интересующую вас смену, чтобы узнать о ней подробнее.
+						</div>
+					</div>
+
+					<div class="inputWrap" id="patrolNameWrap">
+						<label class="outer">Unit-Name-Number маркировка патруля:</label>
+						<input required="required" type="text" name="patrolName" id="patrolName">
+						<span>Например: 3-ADAM-3.</span>
+					</div>
+					
+					<div class="inputWrap" id="arrestDateWrap">
+						<label class="outer">Дата ареста:</label>
+						<input required="required" data-polyfill="all" data-format="d/MMM/yyyy" type="date" name="arrestDate" id="arrestDate">
+						<span>Указывайте дату по GMT +3.</span>
+					</div>
+					
+					<div class="inputWrap" id="officersListWrap">
+						<label class="outer">Состав патруля:</label>
+						<input required="required" type="text" name="officers" id="officer1" placeholder="Например: Police Officer II Victoria Walsh">
+						<input type="text" name="officers" id="officer2" placeholder="Например: Police Officer I Jahns Schoenig">
+						<input type="text" name="officers" id="officer3" placeholder="Например: Police Officer II Jastin Long">
+						<span>Если в патруле 1 или два офицера — неиспользованные поля оставьте ПУСТЫМИ.</span>
+					</div>
+
+					<div class="inputWrap" id="photoWrap">
+						<label class="outer">Фотография арестованного:</label>
+						<div id="idPhotoWrap">
+							<input required="required" type="number" id="photo" name="photo" min="1" max="299">
+							<span class="inputHint">Прикрепите фотографию арестованного.<br>(( Укажите номер скина задержанного персонажа ))</span>
+						</div>
+						<div id="imgPhotoWrap">
+							<img draggable="no" id="imgPhoto" width="94" height="94" alt="Фотография подозреваемого" src="../skins/skin_def.jpg">
+						</div>
+					</div>
+
+					<div class="inputWrap" id="suNameWrap">
+						<label class="outer">Имя арестованного:</label>
+						<input required="required" type="text" name="suName" id="suName">
+						<span>Полное имя арестованного, включая middle name (если есть).</span>
+					</div>
+
+					<div class="inputWrap" id="suLastnameWrap">
+						<label class="outer">Фамилия арестованного:</label>
+						<input required="required" type="text" name="suLastname" id="suLastname">
+						<span>Фамилия арестованного лица.</span>
+					</div>
+
+					<div class="inputWrap--big" id="fullNameWrap">
+						<label class="outer">Полное имя:</label>
+						<input type="text" readonly="readonly" name="fullName" id="fullName">
+						<span>Полное имя арестованного, включая middle name и фамилию.<br>Заполняется автоматически — для того, чтобы вы могли проверить правильность введённых данных.</span>
+					</div>
+
+					<div class="inputWrap" id="suAgeWrap">
+						<label class="outer">Возраст:</label>
+						<input required="required" type="number" name="suAge" id="suAge">
+						<span>Рассчитывается автоматически.<br>Если итоговые данные не совпадают с полученными в результате ручного подсчета\первичного опроса подозреваемого, то вам потребуется вручную их исправить.</span>
+					</div>
+					
+					<div class="inputWrap" id="suBirthdayWrap">
+						<label class="outer">Дата рождения:</label>
+						<input required="required" data-polyfill="all" data-format="d/MMM/yyyy" type="date" name="suBirthday" id="suBirthday">
+						<span>Дата рождения арестованного.<br>Процедуре ареста могут быть подвергнуты лица старше 6 лет.<br>(( Для того, чтобы быстрее перематывать года — <br>нажмите на название месяца и щелкайте по стрелкам слева и справа. ))</span>
+					</div>
+
+					<div class="inputWrap" id="suRaceWrap">
+						<label class="outer">Раса:</label>
+						<select required="required" name="suRace" id="suRace">
+							<option value="W">White</option>
+							<option value="B">Black</option>
+							<option value="A">Asian</option>
+							<option value="H">Hispanic</option>
+							<option value="ME">Arabian</option>
+							<option value="N">Native (Indian, Alaskan, etc.)</option>
+						</select>
+						<span>Раса и\или этническая принадлежность арестованного.</span>
+					</div>
+
+					<div class="inputWrap" id="suHeightWrap">
+						<label class="outer">Рост:</label>
+						<input type="number" min="90" max="230" name="suHeightMeters" id="suHeightMeters" placeholder="centimeters">
+						<input required="required" type="text" name="suHeightImp" id="suHeightImp" readonly="readonly" placeholder="ft, inches">
+						<span>(( Вводите сантиметры. Футы и дюймы заполнятся автоматически. ))</span>
+					</div>
+
+
+					<div class="inputWrap--big" class="statusWrap">
+						<label class="outer">Состояние арестованного:</label>
+						<div class="selectGroupWrap">
+							<div class="selectGroupStatus" id="selectGroupStatus1">
+								<select required="required" name="alive" id="aliveStatus" class="statusSelect">
+									<option value="ALIVE">ALIVE</option>
+									<option value="DEAD">DEAD</option>
+								</select>
+								<span class="statusSpan"><strong>ALIVE</strong> — жив, <strong>DEAD</strong> — мёртв.</span>
+							</div>
+							<div class="selectGroupStatus" id="selectGroupStatus2">
+								<select required="required" name="sobriety" id="sobrietyStatus" class="statusSelect">
+									<option value="SOBER">SOBER</option>
+									<option value="DRUNK">DRUNK</option>
+								</select>
+								<span class="statusSpan"><strong>SOBER</strong> — трезв, <strong>DRUNK</strong> — пьян.</span>
+							</div>
+							<div class="selectGroupStatus" id="selectGroupStatus3">
+								<select required="required" name="influence" id="influenceStatus" class="statusSelect">
+									<option value="ASC">ASC</option>
+									<option value="NOT-ASC">NOT-ASC</option>
+								</select>
+								<span class="statusSpan">
+									<strong>ASC</strong> — под действием токсических\наркотических препаратов.
+									<br><strong>NOT-ASC</strong> — состояние наркотического или токсического опьянения не обнаружено.
+								</span>
+							</div>
+							<div class="selectGroupStatus" id="selectGroupStatus4">
+								<select required="required" name="health" id="healthStatus" class="statusSelect">
+									<option value="INTACT">INTACT</option>
+									<option value="WOUNDED">WOUNDED</option>
+								</select>
+								<span class="statusSpan"><strong>INTACT</strong> — цел, <strong>WOUNDED</strong> — ранен.</span>
+							</div>
+						</div>
+						<span>Состояние арестованного на момент задержания.<br>
+						(( Внимательнее с третьим пунктом — вариант по умолчанию подразумевает наркотическое опьянение ))
+						</span>
+					</div>
+					<div class="inputWrap--big" id="suCrimesWrap">
+						<label class="outer">Причина ареста:</label>
+						<textarea required="required" name="suCrimes" id="suCrimes" rows="8"></textarea>
+						<span>Список нарушений, совершенных арестованным лицом и приведших к его задержанию.<br>
+						В формате «номер статьи — название статьи — пояснение (опционально)»</span>
+					</div>
+					<div class="inputWrap--big" id="extraInfoWrap">
+						<label class="outer">Дополнительная информация:</label>
+						<textarea name="extraInfo" id="extraInfo" rows="8"></textarea>
+						<span>Список экипировки, использованной для облегчения ареста, выводы, примечания, замечания — всё, что может оказаться важным.<br>
+						Примеры:<br>«Произведено 3 выстрелы из X26 Taser»;<br>«Для задержания пришлось применить Pepper Spray и дубинку»;<br>«Во время транспортировки в участок задержанный пытался сбежать»;<br>и так далее.</span>
+					</div>
+					
+					<div class="buttonWrap" id="clearWrap">
+						<input id="clearForm" name="clearForm" type="button" value="Очистить форму">
+					</div>
+
+					<div class="buttonWrap" id="submitWrap">
+						<input onclick="formSubmitCatch();" id="submitRecord" name="submitRecord" type="submit" value="Сгенерировать Arrest Report">
+					</div>
+
+				</fieldset>
+			</form>
+		</div>
+		<div id="resultContainer">
+			<div>
+				<div class="resultTitle" id="codeTitle">
+					<h2>Report Code:</h2>
+					<a onClick="event.preventDefault();" id="themeCodeSelect" href="#"><h3>Выделить всё</h3></a>
+				</div>
+				<div id="themeCode" class="resultBox">
+					<span id="themeCodeBox"></span>
+				</div>
+			</div>
+		</div>
+		<div id="credits">Bundstrom made this.</div>
+		<script>window.noZensmooth = true</script>
+		<script src="../moment.js"></script>
+		<script src="../momenttz.js"></script>	
+		<script src="../sprintf.min.js"></script>
+		<script src="../zenscroll-min.js"></script>
+		<script src="../better-dom.min.js"></script>
+		<script src="../better-i18n-plugin.min.js"></script>
+		<script src="../better-emmet-plugin.min.js"></script>
+		<script src="../better-time-element.min.js"></script>
+		<script src="../better-dateinput-polyfill.min.js"></script>
+
+		<script>
+			this.$ = function(elem) {
+			    if(typeof(elem) != "string") {
+			        return false;
+			    }
+			    if(!document.getElementById(elem)) {
+			        return false;
+			    }
+			    return document.getElementById(elem);
+			}
+
+			function _calculateAge(birthday) { // birthday is a date
+			    var ageDifMs = Date.now() - birthday.getTime();
+			    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+			    return Math.abs(ageDate.getUTCFullYear() - 1970);
+			}
+
+			function toFeet(n) {
+			  var realFeet = ((n*0.393700) / 12);
+			  var feet = Math.floor(realFeet);
+			  var inches = Math.round((realFeet - feet) * 12);
+			  return feet + "ft. " + inches + 'inch.';
+			}
+
+
+			function addClass(o, c){
+			    var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g")
+			    if (re.test(o.className)) return
+			    o.className = (o.className + " " + c).replace(/\s+/g, " ").replace(/(^ | $)/g, "")
+			}
+
+			function reqExit() {
+				console.log("Не все поля заполнены или не выбрана смена");
+				return;
+			}
+
+			var forEach = Array.prototype.forEach,
+				$$ = document.querySelectorAll.bind(document);
+			var selectedWatch;
+
+			window.noZensmooth = false;
+
+			moment.tz.setDefault('Europe/Moscow');
+
+			forEach.call($$('.inputWrap input, .inputWrap--big input, .inputWrap--big textarea'), function (v) {
+				if (v.type == "radio") return;
+
+				if (v.tagName == "textarea") {
+					$(v.id).bind('input propertychange', function() {
+						localStorage.setItem(v.id, v.value);
+						return;
+					});
+				}
+				v.addEventListener('change', function (e) {
+					if (v.type == "date") {
+						localStorage.setItem(v.id, v.previousSibling.getAttribute('datetime'));
+						return;
+					}
+					if(v.id == "suHeightMeters") {
+						localStorage.setItem("suHeightImp", toFeet(v.value))
+					}
+					localStorage.setItem(v.id, v.value);
+				}, false);
+			});
+
+
+
+			document.addEventListener("DOMContentLoaded", function(event) {
+
+				if(localStorage.getItem("patrolName")) $('patrolName').value = localStorage.getItem("patrolName");
+				if(localStorage.getItem("arrestDate")) $('arrestDate').value = localStorage.getItem("arrestDate");
+				if(localStorage.getItem("officer1")) $('officer1').value = localStorage.getItem("officer1");
+				if(localStorage.getItem("officer2")) $('officer2').value = localStorage.getItem("officer2");
+				if(localStorage.getItem("officer3")) $('officer3').value = localStorage.getItem("officer3");
+				if(localStorage.getItem("photo")) $('photo').value = localStorage.getItem("photo");
+				if(localStorage.getItem("suName")) $('suName').value = localStorage.getItem("suName");
+				if(localStorage.getItem("suLastname")) $('suLastname').value = localStorage.getItem("suLastname");
+				if(localStorage.getItem("fullName")) {
+					$('fullName').value = localStorage.getItem("fullName");
+				} 
+				if(localStorage.getItem("suBirthday")) {
+					$('suBirthday').value = localStorage.getItem("suBirthday");
+					var bDay = new Date($('suBirthday').value);
+					$('suAge').value = _calculateAge(bDay);
+				}
+				if(localStorage.getItem("suRace")) $('suRace').value = localStorage.getItem("suRace");
+				if(localStorage.getItem("suHeightImp")) $('suHeightImp').value = localStorage.getItem("suHeightImp");
+				if(localStorage.getItem("suHeightMeters")) $('suHeightMeters').value = localStorage.getItem("suHeightMeters");
+				if(localStorage.getItem("aliveStatus")) $('aliveStatus').value = localStorage.getItem("aliveStatus");
+				if(localStorage.getItem("sobrietyStatus")) $('sobrietyStatus').value = localStorage.getItem("sobrietyStatus");
+				if(localStorage.getItem("influenceStatus")) $('influenceStatus').value = localStorage.getItem("influenceStatus");
+				if(localStorage.getItem("healthStatus")) $('healthStatus').value = localStorage.getItem("healthStatus");
+				if(localStorage.getItem("suCrimes")) $('suCrimes').value = localStorage.getItem("suCrimes");
+				if(localStorage.getItem("extraInfo")) $('extraInfo').value = localStorage.getItem("extraInfo");
+
+				forEach.call($$('.watchRadio'), function (v) {
+					v.addEventListener('click', function (e) {
+						
+						console.log(v.value)
+						switch(v.value) {
+							case "1":
+								selectedWatch = "Утренняя смена, Watch #1, Morning.<br>С 5:00 до 10:59.";
+								break;
+							case "2":
+								selectedWatch = "Дневная смена, Watch #2, Day.<br>С 11:00 до 15:59.";
+								break;
+							case "3":
+								selectedWatch = "Послеобеденная смена, Watch #3, Afternoon.<br>С 16:00 до 18:59.";
+								break;
+							case "4":
+								selectedWatch = "Вечерняя смена, Watch #4, Evening.<br>С 19:00 до 22:59.";
+								break;
+							case "5":
+								selectedWatch = "Ночная смена, Watch #5, Night.<br>С 23:00 до 4:59.";
+								break;
+							default:
+								selectedWatch = "Каждая смена патруля длится от 3 до 6 часов.<br>Выберите интересующую вас смену, чтобы узнать о ней подробнее.";
+						}
+
+						$('watchDescr').innerHTML = selectedWatch;
+					}, false)
+				});
+
+				$('suHeightMeters').addEventListener("change", function() {
+					$('suHeightImp').value = toFeet($('suHeightMeters').value);
+				});
+
+				$('suBirthday').addEventListener("change", function() {
+					var bDay = new Date($('suBirthday').value);
+					$('suAge').value = _calculateAge(bDay);
+				});
+
+				forEach.call($$('#suName, #suLastname'), function (v) {
+					v.addEventListener('change', function (e) {
+						if(!($('suName').value) || !($('suLastname').value)) {
+							return;
+						}
+						var fullNameC = $('suName').value + " " + $('suLastname').value;
+						$("fullName").value = fullNameC;
+						localStorage.setItem("fullName", fullNameC);
+					}, false)
+				});
+				
+
+				var idSkin = $('photo');
+
+				idSkin.addEventListener("change", function() {
+					if (idSkin.value >= 1 && idSkin.value <= 299) {
+						var urlSkin = "../skins/skin_" + idSkin.value + ".jpg";
+						$('imgPhoto').setAttribute('src', urlSkin)
+					};
+				});
+
+			  	var serverTime = parseInt(moment().format("H"));
+
+			  	var legendImage = $('legendImage');
+			  	var clearButton = $('clearForm')
+
+			  	
+
+			  	switch (true) {
+			  		case 23:
+			  		case (serverTime >= 0 && serverTime <= 4):
+			  			legendImage.setAttribute("src", "../5.png");
+			  			break;
+			  		case (serverTime >= 5 && serverTime <= 10):
+			  			legendImage.setAttribute("src", "../1.png");
+			  			break;
+			  		case (serverTime >= 11 && serverTime <= 15):
+			  			legendImage.setAttribute("src", "../3.png");
+			  			break;
+			  		case (serverTime >= 16 && serverTime <= 18):
+			  			legendImage.setAttribute("src", "../3.png");
+			  			break;
+			  		case (serverTime >= 19 && serverTime <= 22):
+			  			legendImage.setAttribute("src", "../4.png");
+			  			break;
+			  	}
+
+				// $('').value = moment().format('YYYY-MM-DD'); //вставляем дату составления отчета по Москве.
+
+				// if (localStorage.getItem('officerName')) $('officerData').value = localStorage.getItem('officerName');
+				 // проверяем, есть ли в localStorage незаконченные записи, если есть — достаём и вставляем в поля
+				// var allInputWraps = document.getElementsByClassName('inputWrap');
+				// var allBigInputWraps = document.getElementsByClassName('inputWrap--big');
+
+
+				themeCodeSelect.addEventListener("click", function() {
+					var selector = $("themeCode");
+					var selection = window.getSelection();
+					selection.selectAllChildren(selector);
+				});
+
+
+				clearButton.addEventListener("click", function() {
+					$('arrestReportForm').reset();
+					clearLocalStorage();
+					zenscroll.to($('watchSelectWrap'));
+					selectedWatch = "Каждая смена патруля длится от 3 до 6 часов.<br>Выберите интересующую вас смену, чтобы узнать о ней подробнее.";
+					$('watchDescr').innerHTML = selectedWatch;
+				});
+
+
+				function adjust_textarea(h) { // не моё.
+				    h.style.height = "20px";
+				    h.style.height = (h.scrollHeight)+"px";
+				};
+			});
+			
+					
+			function formSubmitCatch() {
+				if($('arrestReportForm').checkValidity()) {
+					
+					var about = $("resultContainer");
+
+					var pfileArrReport = new Array();
+					var radioStatus = false;
+					var radioButtons = document.getElementsByName('watch');
+					for (var i = 0; i < radioButtons.length; i++) {
+						if (radioButtons[i].type == "radio" && radioButtons[i].checked) {
+							pfileArrReport['watchNum'] = radioButtons[i].value;
+							radioStatus = true;
+						}
+					};
+					if (radioStatus === false) {
+						reqExit();
+						selectedWatch = "<span style='color: red;'>Вам необходимо выбрать смену патруля!</span>";
+						$('watchDescr').innerHTML = selectedWatch;
+						zenscroll.to($('watchSelectWrap'));
+						return;
+					};
+					console.log("Форма заполнена!");
+
+					forEach.call($$('.inputWrap input, .inputWrap--big input'), function (v) {
+						if (v.type != "radio") pfileArrReport[v.id] = v.value;
+					});
+
+
+					pfileArrReport['officersList'] = "[*] " + pfileArrReport['officer1'] + "<br>";
+					if (pfileArrReport['officer2']) pfileArrReport['officersList'] += "[*] " + pfileArrReport['officer2'] + "<br>";
+					if (pfileArrReport['officer3']) pfileArrReport['officersList'] += "[*] " + pfileArrReport['officer3'] + "<br>";
+
+					var statusArray = document.getElementsByClassName("statusSelect");
+					var statusLine = "";
+					for (var i = 0; i < statusArray.length; i++) {
+						statusLine += statusArray[i].value + ". ";
+					};
+
+					var resultCode = sprintf(`[textarea][hr][/hr][center][code][img]pd-gov.ru/forum/images/watches/%s.png[/img][/code][/center][hr][/hr][center][size=150]ОТЧЕТ ОБ АРЕСТЕ[/size][/center][hr][/hr][hr][/hr][u][b]ИНФОРМАЦИЯ О ПАТРУЛЕ:[/b][/u]
+
+[b]НОМЕР И ВИД ПАТРУЛЯ:[/b] %s
+[b]СОСТАВ ПАТРУЛЯ:[/b]
+[list]%s
+[/list]
+[b]ДАТА АРЕСТА:[/b] %s
+[hr][/hr]
+[size=85][right][color=#BF0000]*[/color] ПРИКРЕПИТЕ ИЗОБРАЖЕНИЕ АРЕСТОВАННОГО.[/right][/size][imgalign=right]http://pd-gov.ru/forum/images/skins/skin_%s.png[/imgalign][u][b]ИНФОРМАЦИЯ ОБ АРЕСТОВАННОМ:[/b][/u]
+
+[b]ИМЯ:[/b] %s
+[b]ФАМИЛИЯ:[/b] %s
+[b]ПОЛНОЕ ИМЯ (В ФОРМАТЕ: ДЖОН ВИКТОР УЭМБО):[/b] %s
+[b]ДАТА РОЖДЕНИЯ:[/b] %s
+[b]ВОЗРАСТ, ПОЛНЫХ ЛЕТ:[/b] %s
+[b]РОСТ:[/b] %s
+[b]РАСА:[/b] %s
+[b]ПРИЧИНА АРЕСТА/СУТЬ ПРЕСТУПЛЕНИЯ:[/b] %s
+[b]СОСТОЯНИЕ ВО ВРЕМЯ АРЕСТА:[/b] %s
+[b]ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ (СПИСОК ЭКИПИРОВКИ, ИСПОЛЬЗОВАННОЙ ДЛЯ ОБЛЕГЧЕНИЯ АРЕСТА):[/b] %s[hr][/hr][/textarea]`, radioButtons, pfileArrReport['patrolName'], pfileArrReport['officersList'].toUpperCase(), moment(pfileArrReport['arrestDate']).format('d/MMM/YYYY').toUpperCase(), pfileArrReport['photo'], pfileArrReport['suName'].toUpperCase(), pfileArrReport['suLastname'].toUpperCase(), pfileArrReport['suName'].toUpperCase() + " " + pfileArrReport['suLastname'].toUpperCase(), moment(pfileArrReport['suBirthday']).format('d/MMM/YYYY').toUpperCase(), pfileArrReport['suAge'] + " YEARS", pfileArrReport['suHeightImp'].toUpperCase(), $('suRace').value, $('suCrimes').value.toUpperCase(), statusLine, $('extraInfo').value.toUpperCase());
+					var pattern = /\r\n|\r|\n/g;
+					var resultCode = resultCode.replace(pattern,"<br>");
+					$("themeCodeBox").innerHTML = resultCode;
+					$("resultContainer").style.display = "block";
+					addClass($("resultContainer"), "animated zoomIn");
+
+
+					zenscroll.to(about)
+
+
+				} else {
+					reqExit();
+					return;
+				}
+			};
+
+			function clearLocalStorage() {
+				if (localStorage.getItem('suName')) localStorage.removeItem('suName');
+				if (localStorage.getItem('patrolName')) localStorage.removeItem('patrolName');
+				if (localStorage.getItem('arrestDate')) localStorage.removeItem('arrestDate');
+				if (localStorage.getItem('officer1')) localStorage.removeItem('officer1');
+				if (localStorage.getItem('officer2')) localStorage.removeItem('officer2');
+				if (localStorage.getItem('officer3')) localStorage.removeItem('officer3');
+				if (localStorage.getItem('photo')) localStorage.removeItem('photo');
+				if (localStorage.getItem('suLastname')) localStorage.removeItem('suLastname');
+				if (localStorage.getItem('fullName')) localStorage.removeItem('fullName');
+				if (localStorage.getItem('suBirthday')) localStorage.removeItem('suBirthday');
+				if (localStorage.getItem('suAge')) localStorage.removeItem('suAge');
+				if (localStorage.getItem('suRace')) localStorage.removeItem('suRace');
+				if (localStorage.getItem('suHeightImp')) localStorage.removeItem('suHeightImp');
+				if (localStorage.getItem('suHeightMeters')) localStorage.removeItem('suHeightMeters');
+				if (localStorage.getItem('suCrimes')) localStorage.removeItem('suCrimes');
+				if (localStorage.getItem('extraInfo')) localStorage.removeItem('extraInfo');
+
+			}
+		</script>
+	</div>
+</body>
+</html>
