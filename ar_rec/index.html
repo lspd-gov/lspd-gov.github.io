@@ -30,7 +30,7 @@
 					<hr>
 					<div id="dateInputWrap" class="inputWrap">
 						<label for="todayDate">Сегодняшняя дата:</label>
-						<input data-polyfill="all" data-format="dd/MMM/yyyy" class="recordInput" readonly="readonly" name="todayDate" id="todayDate" type="date" required="required">
+						<input class="recordInput" readonly="readonly" name="todayDate" id="todayDate" type="text">
 						<span>Заполняется автоматически, время GMT +3.</span>
 					</div>
 					<div id="nameInputWrap" class="inputWrap">
@@ -173,20 +173,21 @@
 					}, false)
 				});
 
-				forEach.call($$('.btr-dateinput-value'), function (v) {
+				forEach.call($$('#suspectJailDate'), function (v) {
 					v.addEventListener('change', function (e) {
+						console.log('сомзинг')
 						// if (v.id == "suspectJailDate") {
 						// 	localStorage.setItem('suspectJailDate', document.querySelector('#jailDateInputWrap > .btr-dateinput-value').getAttribute('datetime'));
 						// }
-						if (v.nextSibling.id == "suspectJailDate" && document.getElementById('suspectUnjailDate').value !== undefined) {
-							if (document.querySelector('#jailDateInputWrap > .btr-dateinput-value').getAttribute('datetime') == "" || jailTime.value == "") {
+						
+							if (jailTime.value == "") {
 								return;
 							}
 
-							countUnjailDate();
+							countUnjailDate()
 							localStorage.setItem('suspectJailDate', v.getAttribute("datetime"));
 							localStorage.setItem('suspectUnjailDate', document.getElementById('suspectUnjailDate').value);
-						}
+						
 					}, false)
 
 					/* А сейчас небольшое объявление:
@@ -199,15 +200,13 @@
 					 */
 				});
 			  	moment.tz.setDefault('Europe/Moscow'); // дефолтная таймзона
-				document.getElementById('todayDate').value = moment().format('YYYY-MM-DD'); //вставляем дату составления отчета по Москве.
+				document.getElementById('todayDate').value = moment().format('D/MMM/YYYY').toUpperCase(); //вставляем дату составления отчета по Москве.
 				if (localStorage.getItem('officerName')) document.getElementById('officerData').value = localStorage.getItem('officerName');
 				if (localStorage.getItem('suspectName')) document.getElementById('suspectName').value = localStorage.getItem('suspectName');
 				if (localStorage.getItem('suspectSurname')) document.getElementById('suspectSurname').value = localStorage.getItem('suspectSurname');
 				if (localStorage.getItem('suspectNicknames')) document.getElementById('suspectNicknames').value = localStorage.getItem('suspectNicknames');
 				if (localStorage.getItem('suspectID')) document.getElementById('suspectID').value = localStorage.getItem('suspectID');
 				if (localStorage.getItem('suspectJailTime')) document.getElementById('suspectJailTime').value = localStorage.getItem('suspectJailTime');
-				if (localStorage.getItem('suspectJailDate')) document.getElementById('suspectJailDate').value = localStorage.getItem('suspectJailDate');
-				if (localStorage.getItem('suspectUnjailDate')) document.getElementById('suspectUnjailDate').value = localStorage.getItem('suspectUnjailDate');
 				if (localStorage.getItem('crimesInput')) document.getElementById('crimesInput').value = localStorage.getItem('crimesInput');
 				if (localStorage.getItem('casefileInput')) document.getElementById('casefileInput').value = localStorage.getItem('casefileInput'); // проверяем, есть ли в localStorage незаконченные записи, если есть — достаём и вставляем в поля
 				// var allInputWraps = document.getElementsByClassName('inputWrap');
@@ -236,12 +235,12 @@
 				clearButton.addEventListener("click", function() {
 					document.getElementById('arrestRecordForm').reset();
 					clearLocalStorage();
-					document.getElementById('todayDate').value = moment().format('YYYY-MM-DD');
+					document.getElementById('todayDate').value = moment().format('D/MMM/YYYY').toUpperCase();
 					if (localStorage.getItem('officerName')) document.getElementById('officerData').value = localStorage.getItem('officerName');
 				});
 
 				function countUnjailDate() {
-					var unixJailDate = Date.parse(document.querySelector('#jailDateInputWrap > .btr-dateinput-value').getAttribute('datetime')); // дату из поля в миллисекунды от Unix time.
+					var unixJailDate = Date.parse(document.querySelector('#suspectJailDate').value); // дату из поля в миллисекунды от Unix time.
 					var resultDate = new Date(unixJailDate + jailTime.value*365*24*60*60*1000); // охренеть какие большие числа
 					moment.tz.setDefault('Europe/London'); // мне снова лень смотреть, поэтому просто поставлю Лондон.
 					document.getElementById('suspectUnjailDate').value = moment(resultDate).format("D/MMM/YYYY").toUpperCase(); // вернуть всё назад

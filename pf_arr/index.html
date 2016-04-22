@@ -106,14 +106,8 @@
 						<input type="text" readonly="readonly" name="fullName" id="fullName">
 						<span>Полное имя арестованного, включая middle name и фамилию.<br>Заполняется автоматически — для того, чтобы вы могли проверить правильность введённых данных.</span>
 					</div>
-
-					<div class="inputWrap" id="suAgeWrap">
-						<label class="outer">Возраст:</label>
-						<input required="required" type="number" name="suAge" id="suAge">
-						<span>Рассчитывается автоматически.<br>Если итоговые данные не совпадают с полученными в результате ручного подсчета\первичного опроса подозреваемого, то вам потребуется вручную их исправить.</span>
-					</div>
 					
-					<div class="inputWrap" id="suBirthdayWrap">
+					<div class="inputWrap--big" id="suBirthdayWrap">
 						<label class="outer">Дата рождения:</label>
 						<input required="required" data-polyfill="all" data-format="d/MMM/yyyy" type="date" name="suBirthday" id="suBirthday">
 						<span>Дата рождения арестованного.<br>Процедуре ареста могут быть подвергнуты лица старше 6 лет.<br>(( Для того, чтобы быстрее перематывать года — <br>нажмите на название месяца и щелкайте по стрелкам слева и справа. ))</span>
@@ -308,8 +302,6 @@
 				} 
 				if(localStorage.getItem("suBirthday")) {
 					$('suBirthday').value = localStorage.getItem("suBirthday");
-					var bDay = new Date($('suBirthday').value);
-					$('suAge').value = _calculateAge(bDay);
 				}
 				if(localStorage.getItem("suRace")) $('suRace').value = localStorage.getItem("suRace");
 				if(localStorage.getItem("suHeightImp")) $('suHeightImp').value = localStorage.getItem("suHeightImp");
@@ -463,6 +455,8 @@
 						if (v.type != "radio") pfileArrReport[v.id] = v.value;
 					});
 
+					var bDay = new Date($('suBirthday').value);
+					pfileArrReport['suAge'] = _calculateAge(bDay);
 
 					pfileArrReport['officersList'] = "[*] " + pfileArrReport['officer1'] + "<br>";
 					if (pfileArrReport['officer2']) pfileArrReport['officersList'] += "[*] " + pfileArrReport['officer2'] + "<br>";
@@ -474,7 +468,7 @@
 						statusLine += statusArray[i].value + ". ";
 					};
 
-					var resultCode = sprintf(`[textarea][hr][/hr][center][code][img]pd-gov.ru/forum/images/watches/%s.png[/img][/code][/center][hr][/hr][center][size=150]ОТЧЕТ ОБ АРЕСТЕ[/size][/center][hr][/hr][hr][/hr][u][b]ИНФОРМАЦИЯ О ПАТРУЛЕ:[/b][/u]
+					var resultCode = sprintf(`[textarea][hr][/hr][center][img]pd-gov.ru/forum/images/watches/%s.png[/img][/center][hr][/hr][center][size=150]ОТЧЕТ ОБ АРЕСТЕ[/size][/center][hr][/hr][hr][/hr][u][b]ИНФОРМАЦИЯ О ПАТРУЛЕ:[/b][/u]
 
 [b]НОМЕР И ВИД ПАТРУЛЯ:[/b] %s
 [b]СОСТАВ ПАТРУЛЯ:[/b]
@@ -493,7 +487,7 @@
 [b]РАСА:[/b] %s
 [b]ПРИЧИНА АРЕСТА/СУТЬ ПРЕСТУПЛЕНИЯ:[/b] %s
 [b]СОСТОЯНИЕ ВО ВРЕМЯ АРЕСТА:[/b] %s
-[b]ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ (СПИСОК ЭКИПИРОВКИ, ИСПОЛЬЗОВАННОЙ ДЛЯ ОБЛЕГЧЕНИЯ АРЕСТА):[/b] %s[hr][/hr][/textarea]`, radioButtons, pfileArrReport['patrolName'], pfileArrReport['officersList'].toUpperCase(), moment(pfileArrReport['arrestDate']).format('d/MMM/YYYY').toUpperCase(), pfileArrReport['photo'], pfileArrReport['suName'].toUpperCase(), pfileArrReport['suLastname'].toUpperCase(), pfileArrReport['suName'].toUpperCase() + " " + pfileArrReport['suLastname'].toUpperCase(), moment(pfileArrReport['suBirthday']).format('d/MMM/YYYY').toUpperCase(), pfileArrReport['suAge'] + " YEARS", pfileArrReport['suHeightImp'].toUpperCase(), $('suRace').value, $('suCrimes').value.toUpperCase(), statusLine, $('extraInfo').value.toUpperCase());
+[b]ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ (СПИСОК ЭКИПИРОВКИ, ИСПОЛЬЗОВАННОЙ ДЛЯ ОБЛЕГЧЕНИЯ АРЕСТА):[/b] %s[hr][/hr][/textarea]`, radioButtons, pfileArrReport['patrolName'], pfileArrReport['officersList'].toUpperCase(), moment(pfileArrReport['arrestDate']).format('D/MMM/YYYY').toUpperCase(), pfileArrReport['photo'], pfileArrReport['suName'].toUpperCase(), pfileArrReport['suLastname'].toUpperCase(), pfileArrReport['suName'].toUpperCase() + " " + pfileArrReport['suLastname'].toUpperCase(), moment(pfileArrReport['suBirthday']).format('D/MMM/YYYY').toUpperCase(), pfileArrReport['suAge'] + " YEARS", pfileArrReport['suHeightImp'].toUpperCase(), $('suRace').value, $('suCrimes').value.toUpperCase(), statusLine, $('extraInfo').value.toUpperCase());
 					var pattern = /\r\n|\r|\n/g;
 					var resultCode = resultCode.replace(pattern,"<br>");
 					$("themeCodeBox").innerHTML = resultCode;
