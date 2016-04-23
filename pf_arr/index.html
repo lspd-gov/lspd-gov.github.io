@@ -487,7 +487,7 @@
 [b]РАСА:[/b] %s
 [b]ПРИЧИНА АРЕСТА/СУТЬ ПРЕСТУПЛЕНИЯ:[/b] %s
 [b]СОСТОЯНИЕ ВО ВРЕМЯ АРЕСТА:[/b] %s
-[b]ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ (СПИСОК ЭКИПИРОВКИ, ИСПОЛЬЗОВАННОЙ ДЛЯ ОБЛЕГЧЕНИЯ АРЕСТА):[/b] %s[hr][/hr][/textarea]`, radioButtons, pfileArrReport['patrolName'], pfileArrReport['officersList'].toUpperCase(), moment(pfileArrReport['arrestDate']).format('D/MMM/YYYY').toUpperCase(), pfileArrReport['photo'], pfileArrReport['suName'].toUpperCase(), pfileArrReport['suLastname'].toUpperCase(), pfileArrReport['suName'].toUpperCase() + " " + pfileArrReport['suLastname'].toUpperCase(), moment(pfileArrReport['suBirthday']).format('D/MMM/YYYY').toUpperCase(), pfileArrReport['suAge'] + " YEARS", pfileArrReport['suHeightImp'].toUpperCase(), $('suRace').value, $('suCrimes').value.toUpperCase(), statusLine, $('extraInfo').value.toUpperCase());
+[b]ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ (СПИСОК ЭКИПИРОВКИ, ИСПОЛЬЗОВАННОЙ ДЛЯ ОБЛЕГЧЕНИЯ АРЕСТА):[/b] %s[hr][/hr][/textarea]`, pfileArrReport['watchNum'], pfileArrReport['patrolName'], pfileArrReport['officersList'].toUpperCase(), moment(pfileArrReport['arrestDate']).format('D/MMM/YYYY').toUpperCase(), pfileArrReport['photo'], pfileArrReport['suName'].toUpperCase(), pfileArrReport['suLastname'].toUpperCase(), pfileArrReport['suName'].toUpperCase() + " " + pfileArrReport['suLastname'].toUpperCase(), moment(pfileArrReport['suBirthday']).format('D/MMM/YYYY').toUpperCase(), pfileArrReport['suAge'] + " YEARS", pfileArrReport['suHeightImp'].toUpperCase(), $('suRace').value, $('suCrimes').value.toUpperCase(), statusLine, $('extraInfo').value.toUpperCase());
 					var pattern = /\r\n|\r|\n/g;
 					var resultCode = resultCode.replace(pattern,"<br>");
 					$("themeCodeBox").innerHTML = resultCode;
