@@ -254,12 +254,12 @@
 			});
 					
 			function formSubmitCatch() {
-				if(document.getElementById('suspectID').checkValidity() && document.getElementById('officerData').checkValidity() && document.getElementById('todayDate').checkValidity() && document.getElementById('suspectName').checkValidity() && document.getElementById('suspectSurname').checkValidity() && document.getElementById('suspectNicknames').checkValidity() && document.getElementById('suspectUnjailDate').checkValidity() && document.getElementById('suspectStatus').checkValidity() && document.getElementById('crimesInput').checkValidity() && document.getElementById('casefileInput').checkValidity() && document.getElementById('suspectJailTime').checkValidity() && document.getElementById('suspectJailDate').checkValidity()) { // Да ёб. Не смотрите сюда.
+				if(document.getElementById('suspectID').checkValidity() && document.getElementById('officerData').checkValidity() && document.getElementById('suspectName').checkValidity() && document.getElementById('suspectSurname').checkValidity() && document.getElementById('suspectNicknames').checkValidity() && document.getElementById('suspectUnjailDate').checkValidity() && document.getElementById('suspectStatus').checkValidity() && document.getElementById('crimesInput').checkValidity() && document.getElementById('casefileInput').checkValidity() && document.getElementById('suspectJailTime').checkValidity() && document.getElementById('suspectJailDate').checkValidity()) { // Да ёб. Не смотрите сюда.
 					var about = document.getElementById("resultContainer");
 					var record = new Array(); 
 					 	record['suspectID'] = document.getElementById('suspectID').value,
 						record['officerName'] = document.getElementById('officerData').value,
-						record['todayDate'] = moment(document.getElementById('todayDate').value).format("D/MMM/YYYY").toUpperCase(),
+						record['todayDate'] = moment(document.getElementById('todayDate').previousSibling.getAttribute('datetime')).format("D/MMM/YYYY").toUpperCase(),
 						record['suspectName'] = document.getElementById('suspectName').value,
 						record['suspectSurname'] = document.getElementById('suspectSurname').value,
 						record['suspectNicknames'] = document.getElementById('suspectNicknames').value,
@@ -301,7 +301,7 @@
 [b]ПОЛНОЕ ОПИСАНИЕ ПРЕСТУПЛЕНИЙ ЗАКЛЮЧЕННОГО:[/b] [color=#4080BF]%s[/color]
 [b]ССЫЛКА НА CASEFILE ЭТОГО ЗАКЛЮЧЕННОГО:[/b] %s
 [/textarea]`, record['todayDate'], record['suspectName'].toUpperCase(), record['suspectSurname'].toUpperCase(), record['suspectNicknames'], record['jailTime'], record['jailDate'], record['suspectUnjailDate'], record['suspectID'], record['suspectStatus'].toUpperCase(), record['officerName'].toUpperCase(), record['crimesInput'], record['casefileInput']);
-					var recordThemeName = sprintf("[%s] [%s %s] [%s]", record['suspectID'], record['suspectName'].toUpperCase(), record['suspectSurname'].toUpperCase(), record['todayDate'])
+					var recordThemeName = sprintf("[%s] [%s %s] [%s]", record['suspectID'], record['suspectName'].toUpperCase(), record['suspectSurname'].toUpperCase(), record['todayDate']);
 					var pattern = /\r\n|\r|\n/g;
 					var resultCode = resultCode.replace(pattern,"<br>");
 
